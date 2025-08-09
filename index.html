@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USE OF ENGLISH — C1</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+    min-height: 100vh; color: white; overflow-x: hidden;
+}
+.container {max-width: 1200px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;}
+.header {text-align:left;margin-bottom:40px;padding-top:20px;}
+.header h1 {font-size:2.5rem;font-weight:300;margin-bottom:10px;letter-spacing:2px;}
+.highlight {color: #4FC3F7; font-weight:600;}
+.header p {font-size:1.1rem;opacity:0.8;font-weight:300;}
+.main-content {display:flex;gap:40px;flex:1;}
+.menu-panel {flex:1;max-width:500px;}
+.menu-item {
+    background: rgba(255,255,255,0.1);backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius:16px;padding:30px;margin-bottom:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
+}
+.menu-item:hover {background:rgba(255,255,255,0.15);transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.2);}
+.menu-item:before {content:'';position:absolute;top:0;left:0;right:0;height:4px;background: linear-gradient(90deg,#4FC3F7,#29B6F6);opacity:0;transition:opacity .3s;}
+.menu-item:hover:before {opacity:1;}
+.menu-letter {display:inline-block;width:40px;height:40px;background:rgba(79,195,247,0.3);border-radius:50%;line-height:40px;text-align:center;font-weight:600;font-size:1.2rem;margin-bottom:15px;border:2px solid rgba(79,195,247,0.5);}
+.menu-item h3 {font-size:1.4rem;margin-bottom:8px;font-weight:500;}
+.menu-item p {font-size:0.95rem;opacity:0.8;line-height:1.4;}
+.generate-more {background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:12px;padding:15px 20px;margin-top:15px;font-size:0.85rem;color:#FFC107;cursor:pointer;transition:.3s;}
+.generate-more:hover {background:rgba(255,193,7,0.2);border-color:rgba(255,193,7,0.5);}
+.welcome-panel {flex:1;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:40px;text-align:center;}
+.welcome-panel h2 {font-size:2rem;margin-bottom:20px;color:#4FC3F7;}
+.welcome-panel p {font-size:1.1rem;line-height:1.6;opacity:0.9;margin-bottom:30px;}
+.practice-box {background:rgba(79,195,247,0.1);border:1px solid rgba(79,195,247,0.3);border-radius:12px;padding:25px;margin-top:30px;}
+.practice-box h3 {font-size:1.3rem;margin-bottom:15px;color:#4FC3F7;}
+.generator-box {background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:12px;padding:25px;margin-top:20px;}
+.generator-box h3 {font-size:1.3rem;margin-bottom:15px;color:#FFC107;}
+.exercise-screen,.results-screen{display:none;text-align:center;max-width:800px;margin:0 auto;}
+.exercise-header {margin-bottom:40px;}
+.exercise-title {font-size:2rem;margin-bottom:10px;color:#4FC3F7;}
+.progress-container {background:rgba(255,255,255,0.1);border-radius:10px;height:8px;margin:20px 0;overflow:hidden;}
+.progress-bar {height:100%;background:linear-gradient(90deg,#4FC3F7,#29B6F6);width:0%;transition:.3s;border-radius:10px;}
+.question-container {background:rgba(255,255,255,0.1);backdrop-filter: blur(20px);border:1px solid rgba(255,255,255,0.2);border-radius:16px;padding:40px;margin-bottom:30px;text-align:left;}
+.question {font-size:1.2rem;line-height:1.6;margin-bottom:25px;}
+.options {display:grid;gap:15px;}
+.option {background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);border-radius:12px;padding:15px 20px;cursor:pointer;transition:.3s;display:flex;align-items:center;}
+.option:hover {background:rgba(79,195,247,0.1);border-color:rgba(79,195,247,0.5);}
+.option.selected {background:rgba(79,195,247,0.2);border-color:#4FC3F7;}
+.option.correct {background:rgba(76,175,80,0.2);border-color:#4CAF50;}
+.option.incorrect {background:rgba(244,67,54,0.2);border-color:#f44336;}
+.option-letter {display:inline-block;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.2);line-height:30px;text-align:center;margin-right:15px;font-weight:600;}
+.input-field {background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:8px;padding:12px 16px;color:white;font-size:1.1rem;margin:0 5px;min-width:150px;}
+.input-field:focus {outline:none;border-color:#4FC3F7;background:rgba(79,195,247,0.1);}
+.input-field::placeholder {color:rgba(255,255,255,0.5);}
+.base-word {background:rgba(79,195,247,0.2);border:1px solid #4FC3F7;border-radius:6px;padding:8px 12px;margin-left:15px;font-weight:bold;font-size:1rem;}
+.controls {display:flex;justify-content:space-between;align-items:center;margin-top:30px;flex-wrap:wrap;gap:15px;}
+.btn {background:linear-gradient(45deg,#4FC3F7,#29B6F6);border:none;border-radius:25px;padding:12px 30px;color:white;font-weight:600;font-size:1rem;cursor:pointer;transition:.3s;text-decoration:none;display:inline-block;}
+.btn:hover {transform:translateY(-2px);box-shadow:0 10px 25px rgba(79,195,247,0.3);}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.btn-secondary {background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);}
+.btn-secondary:hover {background:rgba(255,255,255,0.2);box-shadow:0 10px 25px rgba(255,255,255,0.1);}
+.btn-generate{background:linear-gradient(45deg,#FFC107,#FF9800);color:#1e3c72;font-weight:600;}
+.btn-generate:hover{box-shadow:0 10px 25px rgba(255,193,7,0.3);}
+.question-number {font-size:1rem;opacity:0.8;}
+.results-screen {display:none;text-align:center;max-width:800px;margin:0 auto;}
+.score-card {background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:50px;margin:40px 0;}
+.score-circle {width:120px;height:120px;border:8px solid rgba(79,195,247,0.3);border-radius:50%;margin:0 auto 30px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.score-text {font-size:2rem;font-weight:600;color:#4FC3F7;}
+.answer-review {text-align:left;margin-bottom:20px;}
+.answer-item{background:rgba(255,255,255,0.05);border-radius:12px;padding:20px;margin-bottom:15px;}
+.answer-item.correct{border-left:4px solid #4CAF50;}
+.answer-item.incorrect{border-left:4px solid #f44336;}
+.answer-question{font-size:1.1rem;margin-bottom:10px;font-weight:500;}
+.answer-details{font-size:0.95rem;opacity:0.8;margin-bottom:8px;}
+.answer-explanation{font-size:0.9rem;opacity:0.7;font-style:italic;}
+@media(max-width:768px){
+    .main-content{flex-direction:column;gap:20px;}
+    .container{padding:15px;}
+    .header h1{font-size:2rem;}
+    .menu-item{padding:20px;}
+    .question-container{padding:25px;}
+    .input-field{min-width:120px;font-size:1rem;}
+    .controls{justify-content:center;flex-direction:column;}
+    .controls .btn{width:200px;margin:5px 0;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- MAIN MENU -->
+    <div id="mainMenu">
+        <div class="header">
+            <h1>USE OF ENGLISH — <span class="highlight">C1</span></h1>
+            <p>Cambridge-style tasks; exam-accurate patterns.</p>
+        </div>
+        <div class="main-content">
+            <div class="menu-panel">
+                <div class="menu-item" onclick="startExercise('multipleChoice')">
+                    <div class="menu-letter">A</div>
+                    <h3>Multiple Choice</h3>
+                    <p>12 items — collocations & subtle grammar</p>
+                    <div class="generate-more" onclick="event.stopPropagation(); generateNew('multipleChoice')">✨ Generate New Questions</div>
+                </div>
+                <div class="menu-item" onclick="startExercise('gapFill')">
+                    <div class="menu-letter">B</div>
+                    <h3>Open Cloze (Gap-fill)</h3>
+                    <p>8 grammar blanks in a 150-200 word text</p>
+                    <div class="generate-more" onclick="event.stopPropagation(); generateNew('gapFill')">✨ Generate New Questions</div>
+                </div>
+                <div class="menu-item" onclick="startExercise('wordFormation')">
+                    <div class="menu-letter">C</div>
+                    <h3>Word Formation</h3>
+                    <p>8 sentences, full context — derive the word</p>
+                    <div class="generate-more" onclick="event.stopPropagation(); generateNew('wordFormation')">✨ Generate New Questions</div>
+                </div>
+                <div class="menu-item" onclick="startExercise('sentenceTransformation')">
+                    <div class="menu-letter">D</div>
+                    <h3>Sentence Transformation</h3>
+                    <p>6 prompts — use the given word (3-5 words)</p>
+                    <div class="generate-more" onclick="event.stopPropagation(); generateNew('sentenceTransformation')">✨ Generate New Questions</div>
+                </div>
+            </div>
+            <div class="welcome-panel">
+                <h2>Welcome</h2>
+                <p>Pick a section to start. Content follows Cambridge C1 Advanced handbook patterns.</p>
+                <div class="practice-box">
+                    <h3>Ready for authentic C1 practice?</h3>
+                    <p>Choose <strong>Multiple Choice</strong> for a 12-question set. Gap-fill is a single 160-200 word cloze with 8 grammar blanks (no general vocabulary). Word formation and transformations follow Cambridge patterns.</p>
+                </div>
+                <div class="generator-box">
+                    <h3>🚀 New Feature: Fresh Content!</h3>
+                    <p>Click <strong>"✨ Generate New Questions"</strong> on any exercise to create completely new C1-level practice questions. Never run out of material!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- EXERCISE SCREEN -->
+    <div id="exerciseScreen" class="exercise-screen">
+        <div class="exercise-header">
+            <h2 id="exerciseTitle" class="exercise-title">Multiple Choice</h2>
+            <div class="progress-container"><div id="progressBar" class="progress-bar"></div></div>
+            <div id="questionNumber" class="question-number">Question 1 of 12</div>
+        </div>
+        <div id="questionContainer" class="question-container"></div>
+        <div class="controls">
+            <button class="btn btn-secondary" onclick="returnToMenu()">RETURN TO MENU</button>
+            <button id="nextBtn" class="btn" onclick="nextQuestion()">NEXT</button>
+        </div>
+    </div>
+    <!-- RESULTS SCREEN -->
+    <div id="resultsScreen" class="results-screen">
+        <h2 class="exercise-title">Results</h2>
+        <div class="score-card">
+            <div class="score-circle"><div id="finalScore" class="score-text">0/0</div></div>
+            <h3>Your Score</h3>
+            <p id="scoreMessage"></p>
+        </div>
+        <div id="answerKey" class="answer-review"></div>
+        <div class="controls">
+            <button class="btn btn-secondary" onclick="returnToMenu()">RETURN TO MENU</button>
+            <button class="btn" onclick="restartExercise()">TRY AGAIN</button>
+        </div>
+    </div>
+</div>
+<script>
+const exerciseTemplates={
+    multipleChoice:{title:"Multiple Choice",totalQuestions:12,type:"multipleChoice"},
+    gapFill:{title:"Open Cloze (Gap-fill)",totalQuestions:8,type:"gapFill"},
+    wordFormation:{title:"Word Formation",totalQuestions:8,type:"wordFormation"},
+    sentenceTransformation:{title:"Sentence Transformation",totalQuestions:6,type:"sentenceTransformation"}
+};
+
+const exerciseGenerators={
+    multipleChoice:{
+        patterns:[
+            {template:"The company's reputation was severely _____ by the scandal.",options:["damaged","harmed","tarnished","spoiled"],correct:2,explanation:"'tarnished' forms the strongest collocation here."},
+            {template:"Despite her _____ efforts to maintain a healthy lifestyle, she still felt exhausted.",options:["conscious","conscientious","concentrated","considerable"],correct:1,explanation:"'conscientious' means diligent and careful."},
+            {template:"The new evidence _____ serious doubts on the defendant's alibi.",options:["cast","put","placed","threw"],correct:0,explanation:"The collocation is 'cast doubts'."},
+            {template:"She has a _____ for languages and can pick up vocabulary easily.",options:["talent","gift","flair","skill"],correct:2,explanation:"A 'flair for' is the natural ability."},
+            {template:"The research findings are _____ with previous studies in the field.",options:["consistent","persistent","resistant","insistent"],correct:0,explanation:"'Consistent with' is correct here."},
+            {template:"The hotel's _____ service exceeded all our expectations.",options:["impeccable","irreproachable","unquestionable","indisputable"],correct:0,explanation:"'Impeccable service' is the best collocation."},
+            {template:"His argument was so _____ that critics acknowledged its validity.",options:["compelling","compulsive","comprehensive","competitive"],correct:0,explanation:"'Compelling' means convincing or forceful."},
+            {template:"The committee decided to _____ the meeting due to circumstances.",options:["delay","postpone","defer","adjourn"],correct:1,explanation:"'Postpone a meeting' is standard usage."},
+            {template:"Her _____ knowledge of the subject impressed everyone.",options:["extensive","intensive","expansive","expensive"],correct:0,explanation:"'Extensive' = a great amount."},
+            {template:"The new policy aims to _____ a better work-life balance.",options:["achieve","obtain","acquire","attain"],correct:0,explanation:"You 'achieve a balance'."},
+            {template:"The documentary _____ light on environmental issues.",options:["cast","shed","threw","put"],correct:1,explanation:"'Shed light' is the idiom."},
+            {template:"The athlete's performance has been _____ declining since the injury.",options:["gradually","eventually","progressively","consecutively"],correct:2,explanation:"'Progressively declining' is correct."}
+        ],
+        generate:function(){
+            // Shuffle and pick 12 if you have more in the pattern bank
+            let arr=[...this.patterns];
+            return arr.slice(0,exerciseTemplates.multipleChoice.totalQuestions);
+        }
+    },
+    gapFill:{
+        patterns:[
+            {template:"Scientists have discovered that regular exercise can improve cognitive function, _____ it has been known for centuries.",answer:"although",explanation:"'although' links the contrasting ideas."},
+            {template:"The museum, _____ houses one of the world's finest collections, attracts visitors globally.",answer:"which",explanation:"'which' introduces a non-defining relative clause."},
+            {template:"_____ the circumstances, we decided to proceed with the original plan.",answer:"despite",explanation:"'despite' is the correct preposition."},
+            {template:"She has been working on this project and should _____ finished it by now.",answer:"have",explanation:"'should have finished' is modal perfect."},
+            {template:"The more time you spend practicing, _____ better your performance becomes.",answer:"the",explanation:"Comparative structure: 'the more... the better...'."},
+            {template:"Not only did the team win, _____ they also broke several records.",answer:"but",explanation:"'not only... but also...'"},
+            {template:"_____ it not been for your help, we would never have succeeded.",answer:"had",explanation:"Conditional inversion: 'had it not been for...'"},
+            {template:"Despite _____ warned repeatedly, some people still ignore the advice.",answer:"being",explanation:"Passive gerund structure."}
+        ],
+        generate:function(){
+            let arr=[...this.patterns];
+            return arr.slice(0,exerciseTemplates.gapFill.totalQuestions);
+        }
+    },
+    wordFormation:{
+        patterns:[
+            {base:"able",sentence:"The new software is highly _____ and works across multiple devices.",answer:"adaptable"},
+            {base:"doubt",sentence:"It is _____ the best performance she has ever given.",answer:"undoubtedly"},
+            {base:"rely",sentence:"A good leader must be _____ and trustworthy.",answer:"reliable"},
+            {base:"predict",sentence:"Weather forecasting has become far more _____ with modern technology.",answer:"predictable"},
+            {base:"impress",sentence:"His speech made a lasting _____ on the audience.",answer:"impression"},
+            {base:"broad",sentence:"She has a _____ knowledge of art history.",answer:"broad"},
+            {base:"recall",sentence:"My earliest _____ is of playing in the garden.",answer:"recollection"},
+            {base:"aware",sentence:"Many people are not _____ of the risks involved.",answer:"aware"}
+        ],
+        generate:function(){
+            let arr=[...this.patterns];
+            return arr.slice(0,exerciseTemplates.wordFormation.totalQuestions);
+        }
+    },
+    sentenceTransformation:{
+        patterns:[
+            {prompt:"I haven't seen her for three years. (last)",answer:"was the last time I saw her"},
+            {prompt:"He started playing the piano five years ago. (for)",answer:"for five years"},
+            {prompt:"This is the most boring film I've ever watched. (as)",answer:"as boring a film as this"},
+            {prompt:"They continued to argue for hours. (kept)",answer:"kept arguing for hours"},
+            {prompt:"It wasn't necessary for you to buy any food. (needn't)",answer:"needn't have bought any food"},
+            {prompt:"I'll help you only if you promise to try. (provided)",answer:"provided you promise to try"}
+        ],
+        generate:function(){
+            let arr=[...this.patterns];
+            return arr.slice(0,exerciseTemplates.sentenceTransformation.totalQuestions);
+        }
+    }
+};
+
+let currentExercise=null,currentQuestions=[],currentIndex=0,score=0,answerKey=[];
+
+function startExercise(type){
+    currentExercise=exerciseTemplates[type];
+    currentQuestions=exerciseGenerators[type].generate();
+    currentIndex=0;score=0;answerKey=[];
+    document.getElementById("exerciseTitle").textContent=currentExercise.title;
+    document.getElementById("mainMenu").style.display="none";
+    document.getElementById("resultsScreen").style.display="none";
+    document.getElementById("exerciseScreen").style.display="block";
+    displayQuestion();
+}
+function displayQuestion(){
+    const qData=currentQuestions[currentIndex],qc=document.getElementById("questionContainer");
+    document.getElementById("questionNumber").textContent=`Question ${currentIndex+1} of ${currentQuestions.length}`;
+    document.getElementById("progressBar").style.width=(currentIndex/currentQuestions.length)*100+"%";
+    document.getElementById("nextBtn").disabled=true;
+
+    if(currentExercise.type==="multipleChoice"){
+        let html=`<div class='question'>${qData.question}</div><div class='options'>`;
+        qData.options.forEach((opt,i)=>{html+=`<div class='option' onclick='selectOption(${i})'><div class='option-letter'>${String.fromCharCode(65+i)}</div>${opt}</div>`;});
+        qc.innerHTML=html+"</div>";
+    }
+    else if(currentExercise.type==="gapFill"){
+        qc.innerHTML=`<div class='question'>${qData.question.replace("_____", "<input id='gapInput' class='input-field'/>")}</div><button class='btn' onclick='checkGapFill()'>CHECK</button><div id='gapFeedback'></div>`;
+    }
+    else if(currentExercise.type==="wordFormation"){
+        qc.innerHTML=`<div class='question transformation-template'>${qData.question} <span class='base-word'>${qData.base}</span></div><input id='wfInput' class='input-field'/><button class='btn' onclick='checkWordFormation()'>CHECK</button><div id='wfFeedback'></div>`;
+    }
+    else if(currentExercise.type==="sentenceTransformation"){
+        qc.innerHTML=`<div class='question'>${qData.prompt}</div><input id='stInput' placeholder='Your answer' class='input-field'/><button class='btn' onclick='checkSentenceTransformation()'>CHECK</button><div id='stFeedback'></div>`;
+    }
+}
+function selectOption(i){
+    const q=currentQuestions[currentIndex],correctIndex=q.correct;
+    document.querySelectorAll(".option").forEach((el,idx)=>{
+        el.classList.remove("correct","incorrect","selected");
+        if(idx===i) el.classList.add("selected");
+        if(idx===correctIndex) el.classList.add("correct");
+        else if(idx===i&&i!==correctIndex) el.classList.add("incorrect");
+    });
+    if(i===correctIndex) score++;
+    answerKey.push({question:q.question,entered:q.options[i],selected:q.options[i],correct:q.options[correctIndex],explanation:q.explanation,result:(i===correctIndex)});
+    document.getElementById("nextBtn").disabled=false;
+}
+function checkGapFill(){
+    const val=(document.getElementById("gapInput").value||"").trim().toLowerCase(),q=currentQuestions[currentIndex];
+    const cor=q.correct.toLowerCase();
+    document.getElementById("gapFeedback").innerHTML=(val===cor)?("<span style='color:lime'>Correct!</span> "+q.explanation):("<span style='color:red'>Incorrect.</span> Correct: <strong>"+q.correct+"</strong>. "+q.explanation);
+    if(val===cor) score++;
+    answerKey.push({question:q.question,entered:val,correct:q.correct,explanation:q.explanation,result:(val===cor)});
+    document.getElementById("nextBtn").disabled=false;
+}
+function checkWordFormation(){
+    const val=(document.getElementById("wfInput").value||"").trim().toLowerCase(),q=currentQuestions[currentIndex];
+    const cor=q.correct.toLowerCase();
+    document.getElementById("wfFeedback").innerHTML=(val===cor)?"<span style='color:lime'>Correct!</span>":"<span style='color:red'>Incorrect.</span> Correct: <strong>"+q.correct+"</strong>";
+    if(val===cor) score++;
+    answerKey.push({question:q.question,entered:val,correct:q.correct,result:(val===cor)});
+    document.getElementById("nextBtn").disabled=false;
+}
+function checkSentenceTransformation(){
+    const val=(document.getElementById("stInput").value||"").trim().toLowerCase(),q=currentQuestions[currentIndex];
+    const ans=q.answer.toLowerCase();
+    // Accept answers containing the correct phrase (could be stricter)
+    document.getElementById("stFeedback").innerHTML=(val.includes(ans))?"<span style='color:lime'>Correct!</span>":"<span style='color:red'>Incorrect.</span> Expected: <strong>"+q.answer+"</strong>";
+    if(val.includes(ans)) score++;
+    answerKey.push({question:q.prompt,entered:val,correct:q.answer,result:(val.includes(ans))});
+    document.getElementById("nextBtn").disabled=false;
+}
+function nextQuestion(){
+    currentIndex++;
+    if(currentIndex<currentQuestions.length){displayQuestion();}
+    else{showResults();}
+}
+function showResults(){
+    document.getElementById("exerciseScreen").style.display="none";
+    document.getElementById("resultsScreen").style.display="block";
+    document.getElementById("finalScore").textContent=`${score}/${currentQuestions.length}`;
+    let rev="";
+    answerKey.forEach((a,i)=>{
+        rev+=`<div class='answer-item ${a.result?"correct":"incorrect"}'>
+        <div class='answer-question'><b>Q${i+1}:</b> ${a.question}</div>
+        <div class='answer-details'><b>Your answer:</b> ${a.entered||a.selected||""}</div>
+        <div class='answer-details'><b>Correct:</b> ${a.correct}</div>
+        ${a.explanation?("<div class='answer-explanation'>"+a.explanation+"</div>"):""}
+        </div>`;
+    });
+    document.getElementById("answerKey").innerHTML=rev+
+      `<div style="text-align:center; margin-top:25px;">
+        <button class="btn btn-generate" onclick="generateNew(currentExercise.type)">
+            GENERATE NEW SET
+        </button>
+      </div>`;
+}
+function generateNew(type){startExercise(type);}
+function returnToMenu(){
+    document.getElementById("mainMenu").style.display="block";
+    document.getElementById("exerciseScreen").style.display="none";
+    document.getElementById("resultsScreen").style.display="none";
+}
+function restartExercise(){currentIndex=0;score=0;answerKey=[];displayQuestion();}
+</script>
+</body>
+</html>
